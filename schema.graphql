@@ -1,0 +1,9 @@
+type APIResult {
+    mean: Float!
+    median: Float!
+    mode: Float!
+}
+
+type Query {
+    calculate(values: [Float!]!): APIResult!
+}
