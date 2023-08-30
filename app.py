@@ -2,10 +2,10 @@
 
 import aws_cdk as cdk
 
-from gaggle.gaggle_stack import GaggleStack
+from tech_assessment_api.api_stack import TechAssessmentApiStack
 
 
 app = cdk.App()
-GaggleStack(app, "gaggle")
+TechAssessmentApiStack(app, "tech-assessment-api")
 
 app.synth()
