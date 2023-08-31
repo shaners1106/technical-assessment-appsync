@@ -9,7 +9,8 @@ from aws_cdk.aws_appsync import (
     CfnGraphQLApi,
     CfnGraphQLSchema,
     CfnDataSource,
-    CfnResolver, CfnFunctionConfiguration
+    CfnResolver,
+    CfnFunctionConfiguration,
 )
 
 
@@ -29,6 +30,11 @@ class TechAssessmentApiStack(Stack):
                                       api_id=api.attr_api_id,
                                       definition=open("schema.graphql", "r").read()
                                       )
+        # Generate an API key for the API
+        api_auth_key = appsync.CfnApiKey(self,
+                                         id="TechAssessmentAuthKey",
+                                         api_id=api.attr_api_id
+                                         )
         # Pipeline function 1: Mean
         lambda_mean = _lambda.Function(self,
                                        id='CalculateMean',
@@ -84,12 +90,6 @@ class TechAssessmentApiStack(Stack):
                                        lambda_config=appsync.CfnDataSource.LambdaConfigProperty(lambda_function_arn=lambda_mode.function_arn),
                                        service_role_arn=appsync_lambda_role.role_arn
                                        )
-
-        # TODO:
-        #       Generate API Key
-        #       Figure out how to test API
-        #       Figure out how to deploy it
-
         # Connect lambdas to AppSync
         mean_function = CfnFunctionConfiguration(self,
                                                  id="MeanFunction",
@@ -156,3 +156,5 @@ class TechAssessmentApiStack(Stack):
                                         """,
                                         response_mapping_template="$util.toJson($ctx.prev.result)"
                                         )
+        # Authenticate
+        pipeline_resolver.add_dependency(api_auth_key)
