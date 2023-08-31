@@ -23,6 +23,7 @@ Follow these steps to test, run locally and deploy the API
 > 4. Next, choose the `Body` tab, select the `GraphQL` radio button and input a GraphQL QUERY into the Query window and push `Send`. I pre-calculated the mean, median and mode on a set of input numbers so that I would be able to immediately tell if the API endpoint returned an accurate result
 > 
 > ![](images/Step-3.png)
+> ![](images/Step-4.png)
 
 - ## Global Prerequisites
 > - AWS Account
@@ -41,13 +42,13 @@ Follow these steps to test, run locally and deploy the API
 >    - `cdk --version`
 >    - `node --version`
 >    - `python3 --version`
-> 3. Open a new folder on your machine using an IDE and using the `AWS Access Key ID` and `AWS Secret Access Key` generated in step 1 execute an `aws configure` command to configure an AWS profile for your new IAM User profile
+> 3. Open a new folder on your machine using an IDE and using the `AWS Access Key ID` and `AWS Secret Access Key` generated in step 1 execute an `aws configure` command to configure a local AWS profile for your new IAM User profile
 > 4. Next, bootstrap a new CDK environment on your AWS Account associated with the new IAM User:
 >   - `cdk bootstrap <AWS Account ID>/<AWS Default Region> --profile <profile-name>`
-> 5. Go to the Github repository linked in the submission email and copy the clone link.  Using the clone link and the Github Personal Access Token provided in the submission email, clone the repo into your new folder:
+> 5. Go to the Github repository linked in the submission email and copy the clone link.  Using the clone link and the Github Personal Access Token provided in the submission email, clone the repo directly into your new folder:
 >    - `git clone https://<Personal-Access-Token>@<git-clone-link> .`
 > 6. Configure a Python Virtual Environment to the project and run the following 2 commands to install local project dependencies into your virtual environment:
->   - `source venv/bin/activate` on Mac/Linux or 
+>   - `source venv/bin/activate` on Mac/Linux or `.\venv\Scripts\Activate` on Windows
 >   - `pip install -r requirements.txt`
 > 7. Lastly, to deploy the new API, run the following 2 CDK commands:
 >   - `cdk synth`
