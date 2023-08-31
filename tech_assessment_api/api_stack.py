@@ -85,9 +85,7 @@ class TechAssessmentApiStack(Stack):
                                        service_role_arn=appsync_lambda_role.role_arn
                                        )
 
-        # TODO: Fix the pipeline and pass data through accurately
-        #       Clean up the lambda functions
-        #       Validate input against empty array
+        # TODO:
         #       Generate API Key
         #       Figure out how to test API
         #       Figure out how to deploy it
@@ -102,9 +100,10 @@ class TechAssessmentApiStack(Stack):
                                                  request_mapping_template="""
                                                     {
                                                         "operation": "Invoke",
+                                                        "payload": $util.toJson($ctx.arguments)
                                                     }
                                                  """,
-                                                 response_mapping_template="$util.toJson({'mean': 2.2})"
+                                                 response_mapping_template="$util.toJson($ctx.result)"
                                                  )
         median_function = CfnFunctionConfiguration(self,
                                                    id="MedianFunction",
@@ -115,9 +114,10 @@ class TechAssessmentApiStack(Stack):
                                                    request_mapping_template="""
                                                        {
                                                            "operation": "Invoke",
+                                                           "payload": $util.toJson($ctx.prev.result)
                                                        }
                                                     """,
-                                                   response_mapping_template="$util.toJson({'mean': 2.2, 'median': 2.2})"
+                                                   response_mapping_template="$util.toJson($ctx.result)"
                                                    )
         mode_function = CfnFunctionConfiguration(self,
                                                  id="ModeFunction",
@@ -128,10 +128,10 @@ class TechAssessmentApiStack(Stack):
                                                  request_mapping_template="""
                                                     {
                                                         "operation": "Invoke",
+                                                        "payload": $util.toJson($ctx.prev.result)
                                                     }
                                                  """,
-                                                 response_mapping_template="$util.toJson({'mean': 2.2, 'median': 2.2, 'mode': 2.2})"
-                                                 # response_mapping_template="$util.toJson($ctx.prev.result)"
+                                                 response_mapping_template="$util.toJson($ctx.result)"
                                                  )
         # Instantiate the Pipeline Resolver
         pipeline_resolver = CfnResolver(self,
@@ -150,7 +150,8 @@ class TechAssessmentApiStack(Stack):
                                         request_mapping_template="""
                                             {
                                                 "version": "2018-05-29",
-                                                "operation": "Invoke"
+                                                "operation": "Invoke",
+                                                "payload": $util.toJson($context.arguments),
                                             }
                                         """,
                                         response_mapping_template="$util.toJson($ctx.prev.result)"

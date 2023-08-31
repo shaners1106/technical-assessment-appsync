@@ -9,46 +9,21 @@ _logger.setLevel(logging.INFO)
 def handler(event, context):
     try:
 
-        _logger.info(f"Mode function received event:  {json.dumps(event)}")
-        _logger.info(f"Hello from Mode land!")
-
-        # Grab the previous resolver result
-        # prev_result = event.get("prevResult", {})
-
         # Calculate the median
-        mode = statistics.mode(event)
+        mode = round(statistics.mode(event["values"]), 3)
 
-        _logger.info(f"Mode calculated:  {mode}")
-
-        # Return the result as a JSON response
-        response = {
-            'statusCode': 200,
-            'body': json.dumps({'mean': round(mode, 3)})
+        # Concatenate final APIResult
+        final_calculation = {
+            **event["calculation"],
+            'mode': round(mode, 3),
         }
+        _logger.info(f"Sending the final calculation through the pipeline to the After Mapping Template: {final_calculation}")
 
-        # Concatenate APIResult
-        # new_calculation = {
-        #     **prev_result,
-        #     'mean': round(mode, 3),
-        # }
-
-        # Return the result as a JSON response
-        # response = {
-        #     'statusCode': 200,
-        #     'body': json.dumps(new_calculation)
-        # }
-
-        response = {
-            'statusCode': 200,
-            'body': json.dumps(context.prev.result)
-        }
-
-        # _logger.info(f"Mode function response body:  {json.dumps({'mean': 3.4, 'median': 4.5, 'mode': 5.6})}")
-
-        return response
+        return final_calculation
 
     except Exception as e:
         # Handle errors and return an error response
+        _logger.exception(e)
         response = {
             'statusCode': 500,
             'body': json.dumps({'error': str(e)})
