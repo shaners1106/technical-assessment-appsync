@@ -1,18 +1,49 @@
 import json
 import statistics
+import logging
+
+_logger = logging.getLogger()
+_logger.setLevel(logging.INFO)
 
 
 def handler(event, context):
     try:
 
+        _logger.info(f"Mode function received event:  {json.dumps(event)}")
+        _logger.info(f"Hello from Mode land!")
+
+        # Grab the previous resolver result
+        # prev_result = event.get("prevResult", {})
+
         # Calculate the median
         mode = statistics.mode(event)
+
+        _logger.info(f"Mode calculated:  {mode}")
 
         # Return the result as a JSON response
         response = {
             'statusCode': 200,
             'body': json.dumps({'mean': round(mode, 3)})
         }
+
+        # Concatenate APIResult
+        # new_calculation = {
+        #     **prev_result,
+        #     'mean': round(mode, 3),
+        # }
+
+        # Return the result as a JSON response
+        # response = {
+        #     'statusCode': 200,
+        #     'body': json.dumps(new_calculation)
+        # }
+
+        response = {
+            'statusCode': 200,
+            'body': json.dumps(context.prev.result)
+        }
+
+        # _logger.info(f"Mode function response body:  {json.dumps({'mean': 3.4, 'median': 4.5, 'mode': 5.6})}")
 
         return response
 
