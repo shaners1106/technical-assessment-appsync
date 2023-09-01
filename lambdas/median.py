@@ -26,6 +26,14 @@ def handler(event, context):
 
         return response_context
 
+    except statistics.StatisticsError as e:
+        # An empty values array or errant input values will throw a StatisticsError
+        _logger.exception(e)
+        response = {
+            'status_code': 400,
+            'body': json.dumps({'error': str(e)})
+        }
+        return response
     except Exception as e:
         # Handle errors and return an error response
         _logger.exception(e)

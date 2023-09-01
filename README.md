@@ -12,6 +12,7 @@ Shane Snediker
 Follow these steps to test, run locally and deploy the API
 
 - ## Testing
+> ### Endpoint Testing
 > A testable version of the API is currently deployed to a personal AWS account.  You can test the API by following these steps:
 > 1. Open the API testing tool of your choice.  I used [Postman](https://www.postman.com/)
 > 2. Create a new POST request window and input the following endpoint URL:
@@ -25,6 +26,10 @@ Follow these steps to test, run locally and deploy the API
 > 
 > ![](images/Step-3.png)
 > ![](images/Step-4.png)
+> 
+> ### Unit Testing
+> Once you follow the directions below to clone the project locally, you can execute a suite of unit tests that validate the pipeline resolver function logic by executing the following command from a project terminal:
+>   - `python -m unittest discover tests`
 
 - ## Global Prerequisites
 > - AWS Account
