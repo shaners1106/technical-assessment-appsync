@@ -40,21 +40,21 @@ class TechAssessmentApiStack(Stack):
                                        id='CalculateMean',
                                        runtime=_lambda.Runtime.PYTHON_3_9,
                                        handler='mean.handler',
-                                       code=_lambda.Code.from_asset('lambda')
+                                       code=_lambda.Code.from_asset('lambdas')
                                        )
         # Pipeline function 2: Median
         lambda_median = _lambda.Function(self,
                                          id='CalculateMedian',
                                          runtime=_lambda.Runtime.PYTHON_3_9,
                                          handler='median.handler',
-                                         code=_lambda.Code.from_asset('lambda')
+                                         code=_lambda.Code.from_asset('lambdas')
                                          )
         # Pipeline function 3: Mode
         lambda_mode = _lambda.Function(self,
                                        id='CalculateMode',
                                        runtime=_lambda.Runtime.PYTHON_3_9,
                                        handler='mode.handler',
-                                       code=_lambda.Code.from_asset('lambda')
+                                       code=_lambda.Code.from_asset('lambdas')
                                        )
         # Authenticate lambda data sources with IAM Role
         appsync_lambda_role = iam.Role(self,
