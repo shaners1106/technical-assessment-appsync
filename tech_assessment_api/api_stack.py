@@ -156,5 +156,14 @@ class TechAssessmentApiStack(Stack):
                                         """,
                                         response_mapping_template="$util.toJson($ctx.prev.result)"
                                         )
-        # Authenticate
+
+        # Add dependencies to ensure proper resource creation order
+        mean_function.add_dependency(mean_lambda_ds)
+        median_function.add_dependency(median_lambda_ds)
+        mode_function.add_dependency(mode_lambda_ds)
+        pipeline_resolver.add_dependency(mean_function)
+        pipeline_resolver.add_dependency(median_function)
+        pipeline_resolver.add_dependency(mode_function)
+
+        # Authenticate with a dynamically generated API Key
         pipeline_resolver.add_dependency(api_auth_key)
