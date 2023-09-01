@@ -1,7 +1,7 @@
 # Gaggle Take Home Challenge Overview
 Welcome to the README for my GraphQL InfoMathicaAPI, deployable utilizing AppSync and CloudFormation.
 
-I am beyond thankful and honored to have the opportunity to take this assessment.  Thank you so much for taking the time to put this together for me.  
+I am beyond thankful and honored to have been given the opportunity to take this assessment.  Thank you so much for taking the time to put this together for me.  
 
 I, and I alone, am responsible for the source code; I received absolutely no help on this assessment from anyone.  I used AWS tutorials, AWS
 documentation and API docs and a significant amount of energy and effort.  I hope you enjoy my solution.
@@ -12,6 +12,7 @@ Shane Snediker
 Follow these steps to test, run locally and deploy the API
 
 - ## Testing
+> A testable version of the API is currently deployed to a personal AWS account.  You can test the API by following these steps:
 > 1. Open the API testing tool of your choice.  I used [Postman](https://www.postman.com/)
 > 2. Create a new POST request window and input the following endpoint URL:
 > https://ac4pyjq3drepvocudpdspy2zri.appsync-api.us-east-2.amazonaws.com/graphql
